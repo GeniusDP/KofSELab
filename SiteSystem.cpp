@@ -20,7 +20,7 @@ void SiteSystem::ReadWayInfo() {
 	if ( !available.size()) {
 		cout << "There are no ways! Type in other start and end points( and time)" << endl;
 		ReadWayInfo();
-		//exit(0);//Нужно переписать возможность перезапроса
+		//exit(0);//пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	}else{
         ChooseFlights(available, start_point, end_point);
 	}
@@ -28,7 +28,7 @@ void SiteSystem::ReadWayInfo() {
 
 void SiteSystem::ReadPersonsInfo() {
 	Tourist t;
-	string name, surname;
+	string name, surname, passport;
 	int age = 0;
 	cout << "Enter name please: ";
 	cin >> name;
@@ -40,9 +40,14 @@ void SiteSystem::ReadPersonsInfo() {
 		cout << "Illegal age! Re-enter it, please: ";
 		cin >> age;
 	}
-	cout << "Done!\n";
-	//client.SetPersonalInfo(name, surname, age);
-	client = Tourist(name, surname, {age}, "");
+	cout << "Enter passport number please: ";
+	cin >> passport;
+  	while (passport.size() != 10) {
+    	cout << "CVV must have size 10! \n";
+    	cin >> passport;
+  	}
+  	cout << "Done!\n";
+  	client = Tourist(name, surname, {age}, passport);
 	//client.GetPersonsInfo();
 }
 
