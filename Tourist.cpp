@@ -46,16 +46,16 @@
 
         void Tourist::GetPersonsInfo() //нафіга?
         {
-            cout << "Ім'я: "+Name << endl;
-            cout << "Прізвище: "+Surname << endl;
-            cout << "Дата народження: "+DateOfBirth.seconds << endl;
-            cout << "Номер паспорту: "+PassportNumber << endl;
+            cout << "Name: " << Name << endl;
+            cout << "Surname: " << Surname << endl;
+            cout << "Date of birth: " << DateOfBirth.seconds << endl;
+            cout << "Passport number: " << PassportNumber << endl;
         }
 
 
         void Tourist::GetCardsInfo() //нафіга?
         {
-            cout << "Номер картки: "+CardNumber << endl;
-            cout << "Сvv код: "+CvvCode << endl;
-            cout << "Пароль: "+PIN << endl;
+            cout << "Card number: " << CardNumber << endl;
+            cout << "Сvv-code: " << CvvCode << endl;
+            cout << "Password: " << PIN << endl;
         }

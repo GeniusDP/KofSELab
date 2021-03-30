@@ -7,12 +7,11 @@
 #include "DataBase.h"
 
 using namespace std;
-//void OpenSite();
 
 class SiteSystem {
 private:
 	DataBase data;
-	Ticket ticket();
+	Ticket ticket;
 	Tourist client;
 public:
 	SiteSystem();
@@ -23,7 +22,7 @@ public:
 	void ChooseServices();
 	vector< vector<Flight> > AvailableFlights(string start, string finish);
 	void PrintFlights();
-	void ChooseFlights(string st, string fn);
+	void ChooseFlights(vector< vector<Flight> > available, string st, string fn);
 	void ReadInfoForTicket(); // ?
 	void ChooseSeat();        // ?
 };

@@ -26,6 +26,7 @@ public:
 
     int GetEndDate();
 
+    string GetFlightID();
     vector<bool> GetSeats();
 };
 

@@ -6,9 +6,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-class Ticket
+    class Ticket
     {
-
         //поля
         vector<Flight> Way;
         double TicketPrice;
@@ -16,6 +15,7 @@ class Ticket
         vector<Service> AdditionalServices;
         Tourist Client;
     public:
+        Ticket(){}
         //конструктор
         Ticket(vector<Flight> flights);
 
@@ -25,7 +25,6 @@ class Ticket
         void PrintServices();
 
         void ChooseService(int numberOfService);
-
 
         void AddFlight();
         double GetPrice();

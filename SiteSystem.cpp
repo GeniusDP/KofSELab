@@ -16,8 +16,13 @@ void SiteSystem::ReadWayInfo() {
 	cout << "Enter end point please: ";
 	getline(cin, end_point);
 	vector<vector<Flight>> available = AvailableFlights(start_point, end_point);
-	if (available.size() > 0) {
-		cout << "choose";
+
+	if ( !available.size()) {
+		cout << "There are no ways! Type in other start and end points( and time)" << endl;
+		ReadWayInfo();
+		//exit(0);//Ќужно переписать возможность перезапроса
+	}else{
+        ChooseFlights(available, start_point, end_point);
 	}
 }
 
@@ -38,6 +43,7 @@ void SiteSystem::ReadPersonsInfo() {
 	cout << "Done!\n";
 	//client.SetPersonalInfo(name, surname, age);
 	client = Tourist(name, surname, {age}, "");
+	//client.GetPersonsInfo();
 }
 
 void SiteSystem::ReadCardsInfo() {
@@ -48,32 +54,51 @@ void SiteSystem::ReadCardsInfo() {
 		cout << "Card must have size 16! \n";
 		getline(cin, card);
 	}
-	cout << "Enter cvv please: ";
+	cout << "Enter CVV please: ";
 	cin >> cvv;
 	while (cvv.size() != 3) {
 		cout << "CVV must have size 3! \n";
 		cin >> cvv;
 	}
-	cout << "Enter cvv please: ";
+	cout << "Enter PIN please: ";
 	cin >> pin;
-	while (cvv.size() != 3) {
-		cout << "CVV must have size 3! \n";
-		cin >> cvv;
+	while (pin.size() != 4) {
+		cout << "PIN must have size 3! \n";
+		cin >> pin;
 	}
 	cout << "Checking data!...\n";
 	//Sleep(2000);
 	cout << "Done!\n";
 	client.SetCardInfo(card, cvv, pin);
+	client.GetPersonsInfo();
 }
 
 vector< vector<Flight> > SiteSystem::AvailableFlights(string start, string finish) {
-	vector<vector<Flight>> v;
+	vector< vector<Flight> > v;
 	data.FindFlights(v, start, finish);
 	return v;
 }
 
-void SiteSystem::ChooseFlights(string st, string fn) {
-	vector< vector<Flight> > available = AvailableFlights(st, fn);
+void SiteSystem::ChooseFlights(vector< vector<Flight> > available, string st, string fn) {
+    for(int i=0; i<available.size(); i++){
+        int summaryPrice = 0;
+        cout << i << ".)"<< available[i][0].GetStartPoint();
+        for(int j=0; j<available[i].size(); j++){
+            cout << " -> " << available[i][j].GetEndPoint();
+            summaryPrice += available[i][j].GetPrice();
+        }
+        cout << "| Take-off time = " << available[i][0].GetStartDate() << "| Arrival time = " << available[i][available[i].size()-1].GetEndDate();
+        cout << "\n| price = " << summaryPrice << "\n| ID:";
+        cout << available[i][0].GetFlightID();
+        for(int j=1; j<available[i].size(); j++){
+            cout << "\\" << available[i][j].GetFlightID();
+        }
+        cout << "\n*********************************************************************************" << endl;
+    }
+    int type=0;
+    cout << "Type in number of way which you need: ";
+    cin >> type;
+    ticket = Ticket(available[type]);
 }
 
 

@@ -24,6 +24,10 @@ int Flight::GetEndDate(){
     return m_EndDate.seconds;
 }
 
+string Flight::GetFlightID(){
+    return m_FlightID;
+}
+
 Flight::Flight(string StartPoint, string EndPoint, double FlightPrice, Date StartDate, Date EndDate, string FlightID){
     m_FlightID = FlightID;
     m_StartPoint = StartPoint;

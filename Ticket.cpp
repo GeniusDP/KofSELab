@@ -4,6 +4,7 @@
 
         Ticket::Ticket(vector<Flight> flights = vector<Flight>(0))
         {
+            //cout << "Ticket is done!";
             Way = flights;
             TicketPrice = 0;
             for(Flight flight: Way)

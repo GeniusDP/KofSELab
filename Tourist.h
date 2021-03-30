@@ -17,7 +17,7 @@ using namespace std;
 
         //конструктор
     public:
-        Tourist(string name="", string surname="", Date date={0}, string passport="");
+        Tourist(string name="", string surname="", Date date={0}, string passport="qwerty1234");
 
         //методи
         bool CheckPersonsInfo();

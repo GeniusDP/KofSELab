@@ -3,11 +3,14 @@
 
 DataBase::DataBase() {
 	ifstream FlightFile("DataBase\\Flights.txt"), ServicesFile("DataBase\\Services.txt");
+	//cout << FlightFile.is_open();
 	while (FlightFile) {
 		string st, fn;
 		double cst;
-		FlightFile >> st >> fn >> cst;
-		flights.push_back({ st, fn, cst });
+		Date startTime, endTime;
+		string ID;
+		FlightFile >> st >> fn >> cst >> startTime.seconds >> endTime.seconds >> ID ;
+		flights.push_back(Flight(st, fn, cst, startTime, endTime, ID));
 	}
 	while (ServicesFile) {
 		double cst;
