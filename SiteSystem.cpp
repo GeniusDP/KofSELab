@@ -43,7 +43,7 @@ void SiteSystem::ReadPersonsInfo() {
 	cout << "Enter passport number please: ";
 	cin >> passport;
   	while (passport.size() != 10) {
-    	cout << "CVV must have size 10! \n";
+    	cout << "Passport must have size 10! \n";
     	cin >> passport;
   	}
   	cout << "Done!\n";
