@@ -10,6 +10,7 @@ using namespace std;
     {
         //поля
         vector<Flight> Way;
+        vector<string> SeatsInPlane;
         double TicketPrice;
         vector<Service> IncludedServices;
         vector<Service> AdditionalServices;
@@ -17,7 +18,7 @@ using namespace std;
     public:
         Ticket(){}
         //конструктор
-        Ticket(vector<Flight> flights);
+        Ticket(vector<Flight> flights, vector<string> avaliableSeats);
 
         //методи
         void PrintTicket();

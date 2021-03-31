@@ -2,10 +2,11 @@
 #include "Flight.h"
 #include "Services.h"
 
-        Ticket::Ticket(vector<Flight> flights = vector<Flight>(0))
+        Ticket::Ticket(vector<Flight> flights = vector<Flight>(0), vector<string> avaliableSeats = vector<string>(0) )
         {
             //cout << "Ticket is done!";
             Way = flights;
+            SeatsInPlane = avaliableSeats;
             TicketPrice = 0;
             for(Flight flight: Way)
             {

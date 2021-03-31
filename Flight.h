@@ -10,7 +10,7 @@ class Flight{
     double m_FlightPrice;
     Date m_StartDate;
     Date m_EndDate;
-    vector<bool> m_Seats;
+    vector<bool> m_Seats = vector<bool>(30, 1);
     string m_FlightID;
 public:
     Flight(string StartPoint="", string EndPoint="", double FlightPrice=0., Date StartDate = {0}, Date EndDate = {0}, string FlightID="");
@@ -27,6 +27,7 @@ public:
     int GetEndDate();
 
     string GetFlightID();
+
     vector<bool> GetSeats();
 };
 

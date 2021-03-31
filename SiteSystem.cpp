@@ -20,7 +20,7 @@ void SiteSystem::ReadWayInfo() {
 	if ( !available.size()) {
 		cout << "There are no ways! Type in other start and end points( and time)" << endl;
 		ReadWayInfo();
-		//exit(0);//����� ���������� ����������� �����������
+		//exit(0);
 	}else{
         ChooseFlights(available, start_point, end_point);
 	}
@@ -103,7 +103,23 @@ void SiteSystem::ChooseFlights(vector< vector<Flight> > available, string st, st
     int type=0;
     cout << "Type in number of way which you need: ";
     cin >> type;
-    ticket = Ticket(available[type]);
+
+    vector<string> seats(available[type].size());
+    cout << "Choose the seat for each flight: ";
+    for(int i=0; i<available[type].size(); i++){
+        cout << "******Flight " << i << ": from " << available[type][i].GetStartPoint() << " to " << available[type][i].GetEndPoint() << endl;
+        vector<bool> avalSeats = available[type][i].GetSeats();
+        for(int j=0; j<('F'-'A'+1)*5; j++){
+            if( avalSeats[j] )cout << char(j/6+'A') << char(j%5+'1') << " | ";
+        }
+        string myseat; cin >> myseat;
+        while( myseat.size()!=2 && !avalSeats[(myseat[0]-'A')*6 + myseat[1]-'1'] ){
+            cout << "This seat is not avaliable!";
+            cin >> myseat;
+        }
+        seats[i] = myseat;
+    }
+    ticket = Ticket(available[type], seats);
 }
 
 
@@ -119,4 +135,11 @@ void SiteSystem::PrintFlights() {
 
 void SiteSystem::ChooseServices() {
 	//potom
+}
+
+
+void ChooseSeat(){
+
+
+
 }
