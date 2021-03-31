@@ -48,7 +48,7 @@
         {
             cout << "Name: " << Name << endl;
             cout << "Surname: " << Surname << endl;
-            cout << "Date of birth: " << DateOfBirth.seconds << endl;
+            cout << "Age: " << DateOfBirth.seconds << endl;
             cout << "Passport number: " << PassportNumber << endl;
         }
 

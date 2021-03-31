@@ -4,6 +4,11 @@
 
         Ticket::Ticket(vector<Flight> flights = vector<Flight>(0), vector<string> avaliableSeats = vector<string>(0) )
         {
+            for(int i=0; i<avaliableSeats.size(); i++){
+                ofstream out("DataBase\\" + flights[i].GetFlightID() + ".txt", ios_base::app);
+                out << avaliableSeats[i] << endl;
+            }
+
             //cout << "Ticket is done!";
             Way = flights;
             SeatsInPlane = avaliableSeats;
@@ -15,30 +20,30 @@
         }
         void Ticket::PrintTicket()
         {
-            cout << "Шлях:\n";
-            for (int i = 0; i < Way.size()-1; i++)
+            cout << "Way:\n";
+            for (int i = 0; i < Way.size(); i++)
             {
-                cout << Way[i].GetStartPoint()+" -> ";
+                cout << Way[i].GetStartPoint() << " -> ";
             }
-            cout << Way[Way.size()-1].GetStartPoint() << endl;
-            cout << "Початкова дата: " + Way[0].GetStartDate() << endl;
-            cout << "Кінцева дата: " + Way[0].GetEndDate() << endl;
-            cout << "Цінa: " << TicketPrice << " грн." << endl;
+            cout << Way[Way.size()-1].GetEndPoint() << endl;
+            cout << "Start Time: " << Way[0].GetStartDate() << endl;
+            cout << "Arrival Time: " << Way[Way.size()-1].GetEndDate() << endl;
+            cout << "Price: " << TicketPrice << " USD." << endl;
         }
 
         void Ticket::PrintServices()
         {
-            cout << "Цінa квитка: " << TicketPrice << " грн." << endl;
-            cout << "Включені послуги:" << endl;
+            cout << "ЦіTicket Price: " << TicketPrice << " USD." << endl;
+            cout << "Included Services:" << endl;
             for(Service service: IncludedServices)
             {
                 cout << "- " << service.PrintService() << endl;
             }
 
-            cout << "Додаткові послуги:" << endl;
-            for(Service service: IncludedServices)
+            cout << "Additional Services:" << endl;
+            for(Service service: AdditionalServices)
             {
-                cout << "- " << service.PrintService()+" : " << service.PrintService() << " грн." << endl;
+                cout << "- " << service.PrintService()+" : " << service.PrintService() << " USD." << endl;
             }
 
         }
@@ -50,6 +55,12 @@
             AdditionalServices.erase(AdditionalServices.begin() + numberOfService);
         }
 
+        void Ticket::SetServices(vector<Service> ServicesToAdd) {
+            IncludedServices = ServicesToAdd;
+            for (Service& x : ServicesToAdd) {
+                TicketPrice += x.GetPrice();
+            }
+        }
 
         void Ticket::AddFlight(){};
 

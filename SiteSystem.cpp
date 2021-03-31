@@ -5,6 +5,8 @@ SiteSystem::SiteSystem() {
 }
 
 SiteSystem::~SiteSystem() {
+    cout << "Show your ticket:";
+    ticket.PrintTicket();
 	cout << "Goodbye! Have a great day! :)";
 }
 
@@ -110,10 +112,11 @@ void SiteSystem::ChooseFlights(vector< vector<Flight> > available, string st, st
         cout << "******Flight " << i << ": from " << available[type][i].GetStartPoint() << " to " << available[type][i].GetEndPoint() << endl;
         vector<bool> avalSeats = available[type][i].GetSeats();
         for(int j=0; j<('F'-'A'+1)*5; j++){
-            if( avalSeats[j] )cout << char(j/6+'A') << char(j%5+'1') << " | ";
+            if( avalSeats[j] )cout << char(j/6+'A') << char(j%6+'1') << " | ";
         }
+        cout << endl;
         string myseat; cin >> myseat;
-        while( myseat.size()!=2 && !avalSeats[(myseat[0]-'A')*6 + myseat[1]-'1'] ){
+        while( myseat.size()!=2 || !avalSeats[(myseat[0]-'A')*6 + myseat[1]-'1'] ){
             cout << "This seat is not avaliable!";
             cin >> myseat;
         }
@@ -135,6 +138,22 @@ void SiteSystem::PrintFlights() {
 
 void SiteSystem::ChooseServices() {
 	//potom
+	vector<Service> services = data.GetServices();
+	for (int i=0; i<services.size(); i++) {
+		cout << i + 1 << ". " << services[i].PrintService() << " | " << services[i].GetPrice() << '\n';
+	}
+	vector<Service> choosen;
+	cout << "Enter position of service or 0 if you want to exit \n";
+	int num = 1;
+	while (num) {
+		cin >> num;
+		if (num != 0) {
+			if (num <= services.size() && num >= 1) choosen.push_back(services[num - 1]);
+			else cout << "Enter correct number please!\n";
+		}
+	}
+	ticket.SetServices(choosen);
+	cout << "Done!\n";
 }
 
 

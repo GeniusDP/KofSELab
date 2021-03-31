@@ -36,6 +36,11 @@ Flight::Flight(string StartPoint, string EndPoint, double FlightPrice, Date Star
     m_StartDate = {StartDate};
     m_EndDate = {EndDate};
     m_Seats.resize( ( ('F'-'A') + 1)*( (5-1) + 1) );
+    ifstream in("DataBase\\"+FlightID+".txt");
+        string str;
+        while(in >> str){
+            m_Seats[(str[0]-'A')*6 + str[1]-'1'] = 0;
+        }
 }
 
 void Flight::SetSeats(string position){

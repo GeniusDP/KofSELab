@@ -3,31 +3,27 @@
 
 DataBase::DataBase() {
 	ifstream FlightFile("DataBase\\Flights.txt"), ServicesFile("DataBase\\Services.txt");
+	int cnt=0;
 	while (FlightFile) {
+        cnt++;
 		string st, fn;
 		double cst;
 		Date startTime, endTime;
 		string ID;
 		FlightFile >> st >> fn >> cst >> startTime.seconds >> endTime.seconds >> ID;
 		flights.push_back(Flight(st, fn, cst, startTime, endTime, ID));
+
 	}
-	while (ServicesFile) {
-		double cst;
-		string serv;
-		ServicesFile >> cst;
-		getline(ServicesFile, serv);
-		services.push_back({ serv, cst });
+	double cst;
+	string serv;
+	while (ServicesFile >> cst && getline(ServicesFile, serv)) {
+		services.push_back(Service(serv, cst));
 	}
+	//tourists.push_back(Tourist());
 }
 
 DataBase::~DataBase() {
-//	ofstream TouristsFile("DataBase\\Tourists.txt", ios::app), TicketsFile("DataBase\\Tickets.txt", ios::app);
-//	for (auto& t : tourists) {
-//		TouristsFile << t.Get() << '\n';
-//	}
-//	for (auto& t : tickets) {
-//		TicketsFile << t.Get() << '\n';
-//	}
+    //ofstream outFile(tour);
 }
 
 
@@ -42,16 +38,16 @@ vector<Flight> DataBase::GetAllFlights() {
 
 
 void DataBase::FindFlights(vector< vector<Flight> >& ways, string curVertox, string finish, vector<Flight> curWayParm,  vector<bool> usedParm){
-    vector<bool> used = usedParm;//создание копий параметров
+    vector<bool> used = usedParm;//пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     vector<Flight> curWay = curWayParm;
 
-    if(curVertox == finish){//запись в ways нового маршрута
+    if(curVertox == finish){//пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ ways пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         ways.push_back(curWay);
     }else{
         for(int i=0; i<flights.size(); i++){
             if( curWay.empty() || (!used[i] && curWay[curWay.size()-1].GetEndDate() <= flights[i].GetStartDate() && flights[i].GetStartPoint() == curVertox) ){
                 if( curWay.empty() ){
-                    if( flights[i].GetStartPoint() == curVertox ){//если начинаем строить путь, то должны начать именно со стартовой вершины
+                    if( flights[i].GetStartPoint() == curVertox ){//пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ, пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
                         used[i] = true;
                         curWay.push_back(flights[i]);
 
@@ -72,5 +68,5 @@ void DataBase::FindFlights(vector< vector<Flight> >& ways, string curVertox, str
             }
         }
 
-    }//else заглушки
+    }//else пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 }

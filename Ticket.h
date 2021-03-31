@@ -8,24 +8,24 @@ using namespace std;
 
     class Ticket
     {
-        //поля
         vector<Flight> Way;
         vector<string> SeatsInPlane;
         double TicketPrice;
-        vector<Service> IncludedServices;
+
         vector<Service> AdditionalServices;
         Tourist Client;
     public:
+        vector<Service> IncludedServices;
         Ticket(){}
-        //конструктор
+
         Ticket(vector<Flight> flights, vector<string> avaliableSeats);
 
-        //методи
         void PrintTicket();
 
         void PrintServices();
 
         void ChooseService(int numberOfService);
+        void SetServices(vector<Service> ServicesToAdd);
 
         void AddFlight();
         double GetPrice();

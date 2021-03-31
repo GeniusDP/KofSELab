@@ -15,6 +15,7 @@ int main()
     SiteSystem site;
     site.ReadWayInfo();
     site.ReadPersonsInfo();
+    site.ChooseServices();
     site.ReadCardsInfo();
     return 0;
 }
