@@ -13,9 +13,9 @@ using namespace std;
 int main()
 {
     SiteSystem site;
-    site.ReadWayInfo();
-    site.ReadPersonsInfo();
-    site.ChooseServices();
-    site.ReadCardsInfo();
+    site.ReadWayInfo();system("cls");
+    site.ReadPersonsInfo();system("cls");
+    site.ChooseServices();system("cls");
+    site.ReadCardsInfo();system("cls");
     return 0;
 }

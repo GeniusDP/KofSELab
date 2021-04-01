@@ -44,7 +44,7 @@
         }
 
 
-        void Tourist::GetPersonsInfo() //нафіга?
+        void Tourist::GetPersonsInfo()
         {
             cout << "Name: " << Name << endl;
             cout << "Surname: " << Surname << endl;
@@ -53,7 +53,7 @@
         }
 
 
-        void Tourist::GetCardsInfo() //нафіга?
+        void Tourist::GetCardsInfo()
         {
             cout << "Card number: " << CardNumber << endl;
             cout << "Сvv-code: " << CvvCode << endl;

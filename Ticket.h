@@ -18,11 +18,12 @@ using namespace std;
         vector<Service> IncludedServices;
         Ticket(){}
 
+        //puts info about just getted seats in flights into file <ID>.txt and creates ticket
         Ticket(vector<Flight> flights, vector<string> avaliableSeats);
 
-        void PrintTicket();
+        void PrintTicket();//printing info about ticket onto console and writing into file Ticket.txt
 
-        void PrintServices();
+        void PrintServices();//used in PrintTicket(). Also writes info into file Ticket.txt
 
         void ChooseService(int numberOfService);
         void SetServices(vector<Service> ServicesToAdd);

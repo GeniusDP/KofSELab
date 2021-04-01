@@ -20,11 +20,11 @@ public:
 	void ReadPersonsInfo();
 	void ReadCardsInfo();
 	void ChooseServices();
-	vector< vector<Flight> > AvailableFlights(string start, string finish);
+	vector< vector<Flight> > AvailableFlights(string start, string finish);//gets from DataBase info about all available ways froms start to finish
 	void PrintFlights();
 	void ChooseFlights(vector< vector<Flight> > available, string st, string fn);
-	void ReadInfoForTicket(); // ?
-	void ChooseSeat();        // ?
+	void ReadInfoForTicket();
+	void ChooseSeat();
 };
 
 

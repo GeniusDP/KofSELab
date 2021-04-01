@@ -36,6 +36,8 @@ Flight::Flight(string StartPoint, string EndPoint, double FlightPrice, Date Star
     m_StartDate = {StartDate};
     m_EndDate = {EndDate};
     m_Seats.resize( ( ('F'-'A') + 1)*( (5-1) + 1) );
+    //reading from file info about what flight have been set by another
+    //set by another client
     ifstream in("DataBase\\"+FlightID+".txt");
         string str;
         while(in >> str){

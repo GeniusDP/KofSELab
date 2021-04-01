@@ -4,50 +4,56 @@ SiteSystem::SiteSystem() {
 	cout << "Hello, friend, on our air company website!\n";
 }
 
+//Ends work of the program
+//Starts puting info into file Ticket.txt
 SiteSystem::~SiteSystem() {
-    cout << "Show your ticket:";
+    cout << "Show your ticket:\n";
     ticket.PrintTicket();
 	cout << "Goodbye! Have a great day! :)";
 }
 
 
-void SiteSystem::ReadWayInfo() {
+void SiteSystem::ReadWayInfo() {//reads info about way from console
 	string start_point, end_point;
 	cout << "Enter start point please: ";
 	getline(cin, start_point);
 	cout << "Enter end point please: ";
 	getline(cin, end_point);
+	//gets from Database all ways which are available
 	vector<vector<Flight>> available = AvailableFlights(start_point, end_point);
 
 	if ( !available.size()) {
-		cout << "There are no ways! Type in other start and end points( and time)" << endl;
+		cout << "There are no ways! Type in other start and end points" << endl;
 		ReadWayInfo();
-		//exit(0);
 	}else{
         ChooseFlights(available, start_point, end_point);
 	}
 }
 
-void SiteSystem::ReadPersonsInfo() {
+void SiteSystem::ReadPersonsInfo() {//read from console and writes into file
+	ofstream out("DataBase\\Tickets.txt", ios_base::app);
 	Tourist t;
 	string name, surname, passport;
 	int age = 0;
 	cout << "Enter name please: ";
-	cin >> name;
+	cin >> name; out << "Name: " << name << endl;
 	cout << "Enter surname please: ";
-	cin >> surname;
+	cin >> surname; out << "Surname: " << surname << endl;
 	cout << "Enter age please: ";
 	cin >> age;
 	while (age < 18) {
 		cout << "Illegal age! Re-enter it, please: ";
 		cin >> age;
 	}
+    out << "Age: " << age << endl;
 	cout << "Enter passport number please: ";
 	cin >> passport;
   	while (passport.size() != 10) {
     	cout << "Passport must have size 10! \n";
     	cin >> passport;
   	}
+  	out << "Passport: " << passport << endl;
+  	//out << "----------------------------------------------------------\n";
   	cout << "Done!\n";
   	client = Tourist(name, surname, {age}, passport);
 	//client.GetPersonsInfo();
@@ -86,6 +92,8 @@ vector< vector<Flight> > SiteSystem::AvailableFlights(string start, string finis
 	return v;
 }
 
+//interface of choosing way
+//suggests all flights and client has to choose one of them
 void SiteSystem::ChooseFlights(vector< vector<Flight> > available, string st, string fn) {
     for(int i=0; i<available.size(); i++){
         int summaryPrice = 0;
@@ -97,17 +105,18 @@ void SiteSystem::ChooseFlights(vector< vector<Flight> > available, string st, st
         cout << "| Take-off time = " << available[i][0].GetStartDate() << "| Arrival time = " << available[i][available[i].size()-1].GetEndDate();
         cout << "\n| price = " << summaryPrice << "\n| ID:";
         cout << available[i][0].GetFlightID();
-        for(int j=1; j<available[i].size(); j++){
+        for(int j=1; j<available[i].size(); j++){//prints IDs of all flights
             cout << "\\" << available[i][j].GetFlightID();
         }
         cout << "\n*********************************************************************************" << endl;
     }
     int type=0;
     cout << "Type in number of way which you need: ";
-    cin >> type;
+    cin >> type;//choosing the way
 
+    //choosing seats(from available) to
     vector<string> seats(available[type].size());
-    cout << "Choose the seat for each flight: ";
+    cout << "Choose the seat for each flight:\n";
     for(int i=0; i<available[type].size(); i++){
         cout << "******Flight " << i << ": from " << available[type][i].GetStartPoint() << " to " << available[type][i].GetEndPoint() << endl;
         vector<bool> avalSeats = available[type][i].GetSeats();
@@ -128,11 +137,9 @@ void SiteSystem::ChooseFlights(vector< vector<Flight> > available, string st, st
 
 void SiteSystem::PrintFlights() {
 	vector<Flight> TicketFlights;
-	//TicketFlights = ticket.GetAllFlights();
 	int i = 1;
 	for (const auto& flight : TicketFlights) {
 		cout << i++ << ". ";
-		//flight.PrintFlight();
 	}
 }
 
