@@ -13,6 +13,7 @@ using namespace std;
 int main()
 {
     SiteSystem site;
+    site.StartInfo();
     site.ReadWayInfo();system("cls");
     site.ReadPersonsInfo();system("cls");
     site.ChooseServices();system("cls");

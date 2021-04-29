@@ -24,7 +24,8 @@ public:
 	void PrintFlights();
 	void ChooseFlights(vector< vector<Flight> > available, string st, string fn);
 	void ReadInfoForTicket();
-	void ChooseSeat();
+	vector<string> ChooseSeat(vector<Flight>);
+	void StartInfo();
 };
 
 

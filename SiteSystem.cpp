@@ -1,5 +1,5 @@
 #include "SiteSystem.h"
-
+#include <windows.h>
 SiteSystem::SiteSystem() {
 	cout << "Hello, friend, on our air company website!\n";
 }
@@ -36,53 +36,54 @@ void SiteSystem::ReadPersonsInfo() {//read from console and writes into file
 	string name, surname, passport;
 	int age = 0;
 	cout << "Enter name please: ";
-	cin >> name; out << "Name: " << name << endl;
+	cin >> name;
 	cout << "Enter surname please: ";
-	cin >> surname; out << "Surname: " << surname << endl;
+	cin >> surname;
 	cout << "Enter age please: ";
 	cin >> age;
-	while (age < 18) {
-		cout << "Illegal age! Re-enter it, please: ";
-		cin >> age;
-	}
-    out << "Age: " << age << endl;
 	cout << "Enter passport number please: ";
 	cin >> passport;
-  	while (passport.size() != 10) {
-    	cout << "Passport must have size 10! \n";
+	client = Tourist(name, surname, {age}, passport);
+  	while ( !client.CheckPersonsInfo() ) {
+        cout << "Enter name please: ";
+        cin >> name;
+        cout << "Enter surname please: ";
+        cin >> surname;
+        cout << "Enter age please: ";
+        cin >> age;
+        cout << "Enter passport number please: ";
     	cin >> passport;
+    	client = Tourist(name, surname, {age}, passport);
   	}
+  	out << "Name: " << name << endl;
+  	out << "Surname: " << surname << endl;
+  	out << "Age: " << age << endl;
   	out << "Passport: " << passport << endl;
-  	//out << "----------------------------------------------------------\n";
   	cout << "Done!\n";
-  	client = Tourist(name, surname, {age}, passport);
-	//client.GetPersonsInfo();
 }
 
 void SiteSystem::ReadCardsInfo() {
 	string card, cvv, pin;
 	cout << "Enter card please: ";
 	cin >> card;
-	while (card.size() != 16) {
-		cout << "Card must have size 16! \n";
-		getline(cin, card);
-	}
 	cout << "Enter CVV please: ";
 	cin >> cvv;
-	while (cvv.size() != 3) {
-		cout << "CVV must have size 3! \n";
-		cin >> cvv;
-	}
 	cout << "Enter PIN please: ";
 	cin >> pin;
-	while (pin.size() != 4) {
-		cout << "PIN must have size 3! \n";
-		cin >> pin;
+	client.SetCardInfo(card, cvv, pin);
+	while (!client.CheckCardsInfo()) {
+		cout << "Card is not in right format! Rewrite! \n";
+		cout << "Enter card please: ";
+        cin >> card;
+        cout << "Enter CVV please: ";
+        cin >> cvv;
+        cout << "Enter PIN please: ";
+        cin >> pin;
+        client.SetCardInfo(card, cvv, pin);
 	}
 	cout << "Checking data!...\n";
 	//Sleep(2000);
 	cout << "Done!\n";
-	client.SetCardInfo(card, cvv, pin);
 	client.GetPersonsInfo();
 }
 
@@ -114,24 +115,8 @@ void SiteSystem::ChooseFlights(vector< vector<Flight> > available, string st, st
     cout << "Type in number of way which you need: ";
     cin >> type;//choosing the way
 
-    //choosing seats(from available) to
-    vector<string> seats(available[type].size());
-    cout << "Choose the seat for each flight:\n";
-    for(int i=0; i<available[type].size(); i++){
-        cout << "******Flight " << i << ": from " << available[type][i].GetStartPoint() << " to " << available[type][i].GetEndPoint() << endl;
-        vector<bool> avalSeats = available[type][i].GetSeats();
-        for(int j=0; j<('F'-'A'+1)*5; j++){
-            if( avalSeats[j] )cout << char(j/6+'A') << char(j%6+'1') << " | ";
-        }
-        cout << endl;
-        string myseat; cin >> myseat;
-        while( myseat.size()!=2 || !avalSeats[(myseat[0]-'A')*6 + myseat[1]-'1'] ){
-            cout << "This seat is not avaliable!";
-            cin >> myseat;
-        }
-        seats[i] = myseat;
-    }
-    ticket = Ticket(available[type], seats);
+
+    ticket = Ticket(available[type], ChooseSeat(available[type]));
 }
 
 
@@ -164,8 +149,57 @@ void SiteSystem::ChooseServices() {
 }
 
 
-void ChooseSeat(){
+vector<string> SiteSystem::ChooseSeat(vector< Flight > available){
+    vector<string> seats(available.size());
+    cout << "Choose the seat for each flight:\n";
+    for(int i=0; i<available.size(); i++){
+        cout << "******Flight " << i << ": from " << available[i].GetStartPoint() << " to " << available[i].GetEndPoint() << endl;
+        vector<bool> avalSeats = available[i].GetSeats();
+        for(int j=0; j<('F'-'A'+1)*5; j++){
+            if( avalSeats[j] )cout << char(j/6+'A') << char(j%6+'1') << " | ";
+        }
+        cout << endl;
+        string myseat; cin >> myseat;
+        while( myseat.size()!=2 || !avalSeats[(myseat[0]-'A')*6 + myseat[1]-'1'] ){
+            cout << "This seat is not available!\n";
+            cin >> myseat;
+        }
+        seats[i] = myseat;
+    }
+    return seats;
+}
 
 
-
+//добавил README
+void SiteSystem::StartInfo() {
+    //setlocale(LC_ALL, "russian");
+    setlocale (LC_ALL, "ukr");
+    SetConsoleCP(1251);
+    SetConsoleOutputCP(1251);
+    cout << "Do you want to see instructions for use? (y/n) \n";
+    char ch;
+    cin >> ch;
+    while (ch != 'y' && ch != 'n') {
+        cout << "Enter y or n please!\n";
+        cin >> ch;
+    }
+    if (ch == 'y') {
+        cout << "Вітаємо на нашому сайті, призначеному для бронювання авіаквитків. Для успішного бронювання слідуйте подальшим інструкціям: \n \
+1.  При вході на сайт вам покажеться початкова сторінка, де вам необхідно ввести назву бажаної початкової точки та натиснути клавішу Enter на клавіатурі. Потім аналогічно введіть назву бажаної кінцевої точки та знову натисніть Enter на клавіатурі. \n \
+2.  Після завершення попереднього кроку система сайту покаже вам усі можливі авіаквитки, які можна забронювати та які підходять для введених Вами даних на попередньому кроці (тобто попередня і кінцева точки збігаються). Якщо ж таких квитків не існує,  то сайт запропонує Вам виконати попередній крок ще раз. Зверніть увагу, що шлях може лежати через кілька пунктів. Усі варіанти квитків пронумеровані ( число біля початку квитка означає номер, рахунок починається з 0). Щоб обрати квиток введіть його номер та натисніть Enter на клавіатурі. \n \
+3.  Далі система виведе доступні місця на даному рейсі (рейс пишеться вгорі над місцями). Щоб обрати місце просто введіть його назву, наприклад, ‘А5’ (без лапок). Натисніть Enter. Повторіть ці дії для усіх рейсів, які входять в шлях даного квитка. \n \
+4.  Після завершення попереднього етапу бронювання система попросить Вас ввести особисті дані в такому порядку: ім’я, прізвище, вік (має бути більше 18 років) та номер паспорту (вводьте уважно, кількість цифр має дорівнювати 9). Після кожного введення данних натискайте Enter. \n \
+5.  Далі вам на вибір будуть представлені додаткові послуги з їх вартістю. Введіть номера необхідних вам додаткових послуг через пробіл (номер послуги пишеться перед її назвою). Якщо ви замовили усі необхідні послуги, то просто введіть 0, щоб завершити цей етап. \n \
+6.  Тепер вам необхідно оплатити квиток. Аналогічно до кроку 4 система запросить у вас дані картки у такому порядку: номер картки(16 цифр), СVV-код (3 цифри) та PIN-код (4 цифри). Після кожного введення данних натискайте Enter. \n \
+7.  Потім система покаже Вам ваш електроний квиток. Щоб вийти з сайту натисніть любу клавішу. \n \
+Дякую, що відвідали наш сайт. Щасливого польоту! \n";
+    }
+    else {
+        cout << "Ok!";
+    }
+    cout << "\nPress enter please:";
+    string enter;
+    cin.ignore(1);
+    getline(cin, enter);
+    system("cls");
 }

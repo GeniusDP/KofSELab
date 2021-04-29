@@ -14,8 +14,9 @@ using namespace std;
 
         vector<Service> AdditionalServices;
         Tourist Client;
-    public:
         vector<Service> IncludedServices;
+    public:
+
         Ticket(){}
 
         //puts info about just getted seats in flights into file <ID>.txt and creates ticket

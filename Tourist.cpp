@@ -14,16 +14,25 @@
 
         bool Tourist::CheckPersonsInfo()
         {
-            //if(DateOfBirth >= Date.seconds) return false;
             for(char c: Name)
             {
-                if( !isalpha(c) ) return false;
+                if( !isalpha(c) ){
+                    cout << "Illegal name! \n";
+                    return false;
+                }
             }
             for(char c: Surname)
             {
-                if( !isalpha(c) ) return false;
+                if( !isalpha(c) ){
+                    cout << "Illegal surname! \n";
+                    return false;
+                }
             }
-            if (PassportNumber.size() != 9) return false;
+            if (PassportNumber.size() != 9){
+                cout << "Passport must have size 9! \n";
+                return false;
+            }
+
             return true;
         }
 
@@ -37,9 +46,18 @@
 
         bool Tourist::CheckCardsInfo()
         {
-            if (CvvCode.size()!=3) return false;
-            if (PIN.size() != 4) return false;
-            if (CardNumber.size() != 16) return false;
+            if (CvvCode.size()!=3){
+                cout << "CVV is not in right format!\n";
+                return false;
+            }
+            if (PIN.size() != 4){
+                cout << "CVV is not in right format!\n";
+                return false;
+            }
+            if (CardNumber.size() != 16){
+                cout << "CVV is not in right format!\n";
+                return false;
+            }
             return true;
         }
 
